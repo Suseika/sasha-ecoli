@@ -41,6 +41,7 @@ public final class GenomeTest {
                 )
             )
                 .words(3)
+                .map(Word::toString)
                 .collect(Collectors.toList())
         );
     }

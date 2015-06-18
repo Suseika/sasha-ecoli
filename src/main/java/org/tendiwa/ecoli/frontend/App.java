@@ -32,7 +32,10 @@ public final class App {
                             file
                         ),
                         fileSize
-                    )
+                    ),
+                9,
+                500,
+                3
             );
         System.out.println(
             "Thrice-occurring ninemeres found: " + words.size() + " items"

@@ -15,10 +15,30 @@ public final class CloseOccurrences extends ForwardingList<CharSequence> {
 
     public static final int WORD_LENGTH = 9;
     public static final int DESIRED_OCCURRENCES = 3;
-    public static final int BLOCK_LENGTH = 500;
+    public static final int BLOCK_LENGTH = 20;
     private final List<CharSequence> ninemeres;
 
-    public CloseOccurrences(GenomeSequence genome) {
+    public CloseOccurrences(
+        GenomeSequence genome,
+        int wordLength,
+        int blockLength,
+        int desiredOccurrences
+    ) {
+        if (wordLength > blockLength) {
+            throw new IllegalArgumentException(
+                "Word length can't be greater than block length"
+            );
+        }
+        if (blockLength > genome.length()) {
+            throw new IllegalArgumentException(
+                "Block length can't be greater than genome length"
+            );
+        }
+        if (desiredOccurrences < 1) {
+            throw new IllegalArgumentException(
+                "Desired occurrences must be at least 1"
+            );
+        }
         AtomicInteger i = new AtomicInteger(0);
         this.ninemeres = genome
             .subsequences(BLOCK_LENGTH)

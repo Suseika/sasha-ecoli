@@ -6,7 +6,6 @@ import com.google.common.collect.Multiset;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
-import org.tendiwa.ecoli.frontend.Sasha;
 
 /**
  * @author Georgy Vlasov (suseika@tendiwa.org)
@@ -14,25 +13,28 @@ import org.tendiwa.ecoli.frontend.Sasha;
  */
 public final class CloseOccurrences extends ForwardingList<CharSequence> {
 
+    public static final int WORD_LENGTH = 9;
+    public static final int DESIRED_OCCURRENCES = 3;
+    public static final int BLOCK_LENGTH = 500;
     private final List<CharSequence> ninemeres;
 
     public CloseOccurrences(GenomeSequence genome) {
         AtomicInteger i = new AtomicInteger(0);
         this.ninemeres = genome
-            .subsequences(Sasha.BLOCK_LENGTH)
+            .subsequences(BLOCK_LENGTH)
             .flatMap(
                 block -> {
                     if (i.incrementAndGet() % 200000 == 0) {
                         System.out.println(i.get());
                     }
                     return block
-                        .subsequences(Sasha.WORD_LENGTH)
+                        .subsequences(WORD_LENGTH)
                         .collect(
                             Collectors.toCollection(HashMultiset::create)
                         )
                         .entrySet()
                         .stream()
-                        .filter(entry -> entry.getCount() == Sasha.DESIRED_OCCURRENCES)
+                        .filter(entry -> entry.getCount() == DESIRED_OCCURRENCES)
                         .map(Multiset.Entry::getElement);
                 }
             )

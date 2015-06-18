@@ -3,6 +3,10 @@ package org.tendiwa.ecoli.alg;
 import org.junit.Assert;
 import org.junit.Test;
 
+/**
+ * @author Georgy Vlasov (suseika@tendiwa.org)
+ * @version $Id$
+ */
 public final class GenomeSequenceTest {
     @Test
     public final void containsRightLetters() throws Exception {

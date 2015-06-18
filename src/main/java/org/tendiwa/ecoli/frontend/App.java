@@ -6,13 +6,12 @@ import java.io.FileReader;
 import java.nio.file.Files;
 import java.util.Collection;
 import java.util.concurrent.TimeUnit;
-import org.tendiwa.ecoli.alg.Genome;
 import org.tendiwa.ecoli.alg.GenomeSequence;
-import org.tendiwa.ecoli.alg.Word;
+import org.tendiwa.ecoli.alg.CloseOccurrences;
 
 /**
  * @author Georgy Vlasov (suseika@tendiwa.org)
- * @version $id$
+ * @version $Id$
  */
 public final class App {
     public static void main(String[] args) throws Exception {
@@ -26,24 +25,22 @@ public final class App {
         );
         Stopwatch watch = Stopwatch.createStarted();
         final int fileSize = (int) Files.size(file.toPath());
-        final Collection<Word> words = new TripleNinemeres(
-            new Genome(
-                new GenomeSequence(
-                    new FileReader(
-                        file
-                    ),
-                    fileSize
-                )
-            )
+        final Collection<CharSequence> words =
+            new CloseOccurrences(
+                    new GenomeSequence(
+                        new FileReader(
+                            file
+                        ),
+                        fileSize
+                    )
+            );
+        System.out.println(
+            "Thrice-occurring ninemeres found: " + words.size() + " items"
         );
         System.out.println(
-            "Thrice-occuring ninemeres found: " + words.size() + " items"
+            "Computation took " + watch.elapsed(TimeUnit.SECONDS) + " seconds"
         );
         System.out.println("Here they are:");
         words.forEach(System.out::println);
-        System.out.println(
-            "Computation took " + watch.elapsed(TimeUnit.MILLISECONDS)
-                + " ms"
-        );
     }
 }

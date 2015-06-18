@@ -5,10 +5,11 @@ import java.nio.CharBuffer;
 import java.util.Arrays;
 
 /**
+ * Nucleobase sequence read from file.
  * @author Georgy Vlasov (suseika@tendiwa.org)
- * @version $id$
+ * @version $Id$
  */
-public final class GenomeSequence implements CharSequence {
+public final class GenomeSequence implements SubsequenceableSequence {
     public static final int BUFFER_SIZE = 2048;
     private final transient char[] characters;
 

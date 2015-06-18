@@ -4,7 +4,7 @@ import com.sun.xml.internal.messaging.saaj.util.CharReader;
 
 /**
  * @author Georgy Vlasov (suseika@tendiwa.org)
- * @version $id$
+ * @version $Id$
  */
 public final class StringCharReader extends CharReader implements CharSequence {
     private final String string;

@@ -25,6 +25,7 @@ public final class CloseOccurrences extends ForwardingList<CharSequence> {
             .flatMap(
                 block -> {
                     if (i.incrementAndGet() % 200000 == 0) {
+                        // For debugging purposes to see the progress
                         System.out.println(i.get());
                     }
                     return block

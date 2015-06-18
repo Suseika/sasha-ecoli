@@ -6,6 +6,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * A set of all possible combinations of letters ATGC of given length.
+ *
+ * <p>It doesn't do anything that Sasha asked for, it was just fun to implement.
  * @author Georgy Vlasov (suseika@tendiwa.org)
  * @version $Id$
  */
@@ -14,6 +17,10 @@ public final class AllWords extends ForwardingSet<CharSequence> {
     private static final char[] ATGC = new char[]{'A', 'T', 'G', 'C'};
     private final Set<CharSequence> words;
 
+    /**
+     * Creates a set of all 4<sup>length</sup> combinations of ATGC letters.
+     * @param length Length of each combination to generate.
+     */
     public AllWords(int length) {
         final int permutations = (int) Math.round(Math.pow(4, length));
         words = new HashSet<>(permutations);

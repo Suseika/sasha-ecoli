@@ -13,13 +13,10 @@ import java.util.stream.Collectors;
  */
 public final class CloseOccurrences extends ForwardingList<CharSequence> {
 
-    public static final int WORD_LENGTH = 9;
-    public static final int DESIRED_OCCURRENCES = 3;
-    public static final int BLOCK_LENGTH = 20;
     private final List<CharSequence> ninemeres;
 
     public CloseOccurrences(
-        GenomeSequence genome,
+        SubsequenceableSequence genome,
         int wordLength,
         int blockLength,
         int desiredOccurrences
@@ -41,7 +38,7 @@ public final class CloseOccurrences extends ForwardingList<CharSequence> {
         }
         AtomicInteger i = new AtomicInteger(0);
         this.ninemeres = genome
-            .subsequences(BLOCK_LENGTH)
+            .subsequences(blockLength)
             .flatMap(
                 block -> {
                     if (i.incrementAndGet() % 200000 == 0) {
@@ -49,14 +46,15 @@ public final class CloseOccurrences extends ForwardingList<CharSequence> {
                         System.out.println(i.get());
                     }
                     return block
-                        .subsequences(WORD_LENGTH)
+                        .subsequences(wordLength)
                         .collect(
                             Collectors.toCollection(HashMultiset::create)
                         )
                         .entrySet()
                         .stream()
-                        .filter(entry -> entry.getCount() == DESIRED_OCCURRENCES)
-                        .map(Multiset.Entry::getElement);
+                        .filter(entry -> entry.getCount() == desiredOccurrences)
+                        .map(Multiset.Entry::getElement)
+                        .map(Object::toString);
                 }
             )
             .distinct()

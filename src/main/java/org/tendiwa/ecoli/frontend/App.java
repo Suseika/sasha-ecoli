@@ -34,7 +34,7 @@ public final class App {
                         fileSize
                     ),
                 9,
-                500,
+                90,
                 3
             );
         System.out.println(

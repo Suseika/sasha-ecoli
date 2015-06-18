@@ -11,8 +11,8 @@ public interface SubsequenceableSequence extends CharSequence {
     default Stream<SubsequenceableSequence> subsequences(int length) {
         if (length > this.length()) {
             throw new IllegalArgumentException(
-                "Length of subsequences must not exceed " +
-                    "the length of the sequence"
+                "Length of subsequences ("+length+") must not exceed " +
+                    "the length of the sequence ("+this.length()+")"
             );
         }
         final int lastStart = this.length() - length + 1;
@@ -32,8 +32,29 @@ public interface SubsequenceableSequence extends CharSequence {
         }
 
         @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            Basic basic = (Basic) o;
+
+            return !(sequence != null ? !sequence.equals(basic.sequence) : basic.sequence != null);
+
+        }
+
+        @Override
+        public int hashCode() {
+            return sequence != null ? sequence.hashCode() : 0;
+        }
+
+        @Override
         public int length() {
             return this.sequence.length();
+        }
+
+        @Override
+        public String toString() {
+            return sequence.toString();
         }
 
         @Override
